@@ -1,7 +1,7 @@
 import requests
 
 # URL to make an HTTP GET request to
-url = "http://127.0.0.1:8000/extra"
+url = "http://127.0.0.1:8000/"
 
 # Make the HTTP GET request
 response = requests.get(url)
