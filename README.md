@@ -31,6 +31,10 @@
     ```bash
     $ pip install pytest
     ```
+4. Install requests:
+    ```bash
+    $ pip install requests
+    ```
 
 ## Usage
 
@@ -52,6 +56,6 @@ Check API docs on on http://127.0.0.1:8000/docs
 1. Run the application using instructions above
 2. Run tests using the following scripts:
 ```bash
-$ cd test
+$ cd src/test
 $ pytest test.py
 ```
