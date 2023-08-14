@@ -38,4 +38,4 @@ async def add_movie(movie_id:int, movie: Movie):
     if movie_id in db.keys():
         raise HTTPException(status_code=400, detail=f"Bad Request Error. Movie with id: {movie_id} already exists.")
     
-    db[movie_id] = movie.name
+    db[movie_id] = movie
