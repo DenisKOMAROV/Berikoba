@@ -22,8 +22,8 @@ def test_get_all_movies():
     assert response.status_code == 200
 
     assert data == [
-        {"name": "Lord of the Rings"},
-        {"name": "Hobbit"}
+        "Lord of the Rings",
+        "Hobbit",
     ]
 
 get_movie_test_data = [
@@ -40,7 +40,11 @@ def test_get_movie(movie_id, movie_name):
 
     assert response.status_code == 200
 
-    assert data == {"name": movie_name}
+    assert data == {
+                    "name": movie_name,
+                    "likes": 0,
+                    "dislikes": 0,
+                    }
 
 def test_add_movie():
     api_url = f"{BASE_URL}/movies/2"
