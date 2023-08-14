@@ -1,14 +1,63 @@
+import pytest
 import requests
 
-# URL to make an HTTP GET request to
-url = "http://127.0.0.1:8000/"
+BASE_URL = "http://127.0.0.1:8000"
 
-# Make the HTTP GET request
-response = requests.get(url)
+def test_root():
+    api_url = f"{BASE_URL}"
 
-# Check if the request was successful (status code 200)
-if response.status_code == 200:
-    data = response.json()  # Convert response to JSON format
-    print("Response JSON:", data)
-else:
-    print("Request failed with status code:", response.status_code)
+    response = requests.get(api_url)
+    data = response.json()
+
+    assert response.status_code == 200
+
+    assert data["message"] == "I am Berikoba. Welcome!"
+
+def test_get_all_movies():
+    api_url = f"{BASE_URL}/movies"
+
+    response = requests.get(api_url)
+    data = response.json()
+
+    assert response.status_code == 200
+
+    assert data == [
+        {"name": "Lord of the Rings"},
+        {"name": "Hobbit"}
+    ]
+
+get_movie_test_data = [
+    (0, "Lord of the Rings"),
+    (1, "Hobbit"),
+]
+
+@pytest.mark.parametrize("movie_id, movie_name", get_movie_test_data)
+def test_get_movie(movie_id, movie_name):
+    api_url = f"{BASE_URL}/movies/{movie_id}"
+
+    response = requests.get(api_url)
+    data = response.json()
+
+    assert response.status_code == 200
+
+    assert data == {"name": movie_name}
+
+def test_add_movie():
+    api_url = f"{BASE_URL}/movies/2"
+    
+    assert get_number_of_movies() == 2
+
+    response = requests.post(api_url, json={"name": "Lore of the Things"})
+    assert response.status_code == 200
+
+    assert get_number_of_movies() == 3
+
+def get_number_of_movies():
+    api_url = f"{BASE_URL}/movies"
+
+    response = requests.get(api_url)
+    data = response.json()
+
+    assert response.status_code == 200
+
+    return len(data)
