@@ -1,6 +1,7 @@
 import pytest
 import requests
 
+
 BASE_URL = "http://127.0.0.1:8000"
 
 def test_root():
@@ -65,3 +66,39 @@ def get_number_of_movies():
     assert response.status_code == 200
 
     return len(data)
+
+
+@pytest.mark.parametrize("movie_id, movie_name", get_movie_test_data)
+def test_likes(movie_id, movie_name):
+    api_url = f"{BASE_URL}/movies/{movie_id}/score"
+    params = {
+            "movie_id": movie_id,
+            "user_score": "like",
+            }
+
+    response = requests.post(api_url, params=params)
+    assert response.status_code == 200
+
+    data = response.json()
+    
+    assert data["movie_id"] == movie_id
+    assert data["score"] == "like"
+    assert data["likes"] == 1
+
+
+@pytest.mark.parametrize("movie_id, movie_name", get_movie_test_data)
+def test_dislikes(movie_id, movie_name):
+    api_url = f"{BASE_URL}/movies/{movie_id}/score"
+    params = {
+            "movie_id": movie_id,
+            "user_score": "dislike",
+            }
+
+    response = requests.post(api_url, params=params)
+    assert response.status_code == 200
+
+    data = response.json()
+    
+    assert data["movie_id"] == movie_id
+    assert data["score"] == "dislike"
+    assert data["dislikes"] == 1
