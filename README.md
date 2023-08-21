@@ -22,6 +22,15 @@
 
 ## Installation
 
+### Database preparation
+
+1. Install PostgreSQL: https://www.postgresql.org/download/
+    * (optionally) Install pgAdmin as an UI tool for the database https://www.pgadmin.org/
+2. Create "berikoba" database (see database/create_berikoba_db.sql as an example)
+3. Create "movies" table inside "berikoba" database (see database/create_mvoies_table.sql as an example)
+
+### Installation
+
 1. Install Python v3.6+ ([python.org downloads](https://www.python.org/downloads/))
 2. Install FastAPI:
     ```bash
